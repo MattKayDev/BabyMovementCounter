@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBabyKickCounter.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            VerticalOptions="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <BoxView CornerRadius="180"
+                         Color="#1aff90"
+                         HeightRequest="365"
+                         WidthRequest="365"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"/>
+                <ImageButton x:Name="btnBaby"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             WidthRequest="350"
+                             HeightRequest="350"
+                             Source="baby_white.png"
+                             BackgroundColor="Transparent"
+                             Clicked="btnBaby_Clicked"
+                             />
+            </Grid>
+
+            <Label x:Name="lblTimer"
+                   Text="00:00:00"
+                   IsVisible="False"
+                   HorizontalOptions="Center"
+                   FontSize="Medium"
+                   />
+
+            <Label x:Name="lblMovement"
+                   Text="1"
+                   IsVisible="false"
+                   HorizontalOptions="Center"
+                   FontSize="Medium"/>
+
+            <Label
+                Text="Hello, Baby!"
+                FontAttributes="Bold"
+                TextColor="#1aff90"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Label
+                x:Name="lblInstructions"
+                Text="Let's count those movements together!"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="18"
+                HorizontalOptions="Center" />
+            <Button
+                x:Name="TimerBtn"
+                Text="Start Timing"
+                Clicked="OnTimerStartClicked"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
