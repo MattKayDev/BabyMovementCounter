@@ -16,7 +16,8 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        count = 0;
+        this.count = 0;
+
     }
 
     private async void OnTimerStartClicked(object sender, EventArgs e)
@@ -33,34 +34,47 @@ public partial class MainPage : ContentPage
 
             TimerBtn.Text = "Stop Timing";
             TimerBtn.BackgroundColor = Color.FromArgb("#ff4d4d");
-            lblInstructions.Text = "Click on the baby above to register a movement.";
+            lblInstructions.Text = "Click on the baby above to register a movement. \n It's best to keep the timer running for few minutes to get a more acurate result.";
             lblMovement.Text = "0";
             lblMovement.IsVisible = true;
         }
         else
         {
-            this.timer.Stop();
-            TimerBtn.Text = "Start Timing";
-            TimerBtn.BackgroundColor = Color.FromArgb("#1aff90");
-            lblTimer.IsVisible = false;
-            this.timer = null;
-            lblInstructions.Text = "Let's count those movements together!";
-            lblMovement.IsVisible = false;
-            await CheckBabyMovement();
-            this.count = 0;
+            await TimerStopAsync();
         }
         
     }
 
+    private async Task TimerStopAsync()
+    {
+        this.timer.Stop();
+        this.timer = null;
+
+        TimerBtn.Text = "Start Timing";
+        TimerBtn.BackgroundColor = Color.FromArgb("#1aff90");
+        lblTimer.IsVisible = false;
+
+        lblInstructions.Text = "Let's count those movements together!";
+        lblMovement.IsVisible = false;
+
+        await this.CheckBabyMovement();
+
+        this.count = 0;
+    }
+
     private void TimerTicks()
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
             //Update view herel
             var timeSpan = DateTime.Now - this.timeStarted;
             this.ranTimeSpan = timeSpan;
             this.timeRan = $"{timeSpan.Hours}:{timeSpan.Minutes}:{timeSpan.Seconds}";
             lblTimer.Text = this.timeRan;
+            if (timeSpan.Hours == 1)
+            {
+                await TimerStopAsync();
+            }
         });
     }
 
